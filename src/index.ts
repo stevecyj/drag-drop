@@ -31,7 +31,13 @@ class Project {
   private config() {
     this.formElem.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log(this.titleElem.value);
+      let userInput: [string, string, number] = [
+        this.titleElem.value,
+        this.descElem.value,
+        +this.peopleElem.value
+      ];
+      const [title, desc, people] = userInput;
+      console.log(title, desc, people);
     });
   }
 }
