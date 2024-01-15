@@ -1,4 +1,4 @@
-class Project {
+class Input {
   templateElem: HTMLTemplateElement;
   renderElem: HTMLTemplateElement;
   formElem: HTMLTemplateElement;
@@ -24,10 +24,6 @@ class Project {
     this.config();
   }
 
-  private attach() {
-    this.renderElem.insertAdjacentElement("afterbegin", this.formElem);
-  }
-
   private config() {
     this.formElem.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -44,6 +40,40 @@ class Project {
       this.peopleElem.value = "";
     });
   }
+
+  private attach() {
+    this.renderElem.insertAdjacentElement("afterbegin", this.formElem);
+  }
 }
 
-const project = new Project();
+class List {
+  templateElem: HTMLTemplateElement;
+  renderElem: HTMLTemplateElement;
+  sectionElem: HTMLTemplateElement;
+  constructor(private type: "active" | "finished") {
+    this.templateElem = <HTMLTemplateElement>document.querySelector("#list");
+    this.renderElem = <HTMLTemplateElement>document.querySelector("#app");
+    const imported = document.importNode(this.templateElem.content, true);
+    this.sectionElem = <HTMLTemplateElement>imported.firstElementChild;
+
+    this.attach();
+    this.contentRender();
+  }
+
+  contentRender() {
+    const listId = `${this.type}-projects-list`;
+    this.sectionElem.querySelector("ul")!.id = listId;
+    this.sectionElem.querySelector(
+      "h2"
+    )!.innerText = `${this.type.toUpperCase()} PROJECTS`;
+  }
+
+  private attach() {
+    this.renderElem.insertAdjacentElement("beforeend", this.sectionElem);
+  }
+}
+
+const projInput = new Input();
+
+const activeList = new List("active");
+const finishedList = new List("finished");

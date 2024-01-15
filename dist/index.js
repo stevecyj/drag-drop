@@ -1,5 +1,5 @@
 "use strict";
-class Project {
+class Input {
     constructor() {
         this.templateElem = document.querySelector("#project");
         this.renderElem = document.querySelector("#app");
@@ -11,9 +11,6 @@ class Project {
         this.peopleElem = this.formElem.querySelector("#people");
         this.attach();
         this.config();
-    }
-    attach() {
-        this.renderElem.insertAdjacentElement("afterbegin", this.formElem);
     }
     config() {
         this.formElem.addEventListener("submit", (e) => {
@@ -30,5 +27,29 @@ class Project {
             this.peopleElem.value = "";
         });
     }
+    attach() {
+        this.renderElem.insertAdjacentElement("afterbegin", this.formElem);
+    }
 }
-const project = new Project();
+class List {
+    constructor(type) {
+        this.type = type;
+        this.templateElem = document.querySelector("#list");
+        this.renderElem = document.querySelector("#app");
+        const imported = document.importNode(this.templateElem.content, true);
+        this.sectionElem = imported.firstElementChild;
+        this.attach();
+        this.contentRender();
+    }
+    contentRender() {
+        const listId = `${this.type}-projects-list`;
+        this.sectionElem.querySelector("ul").id = listId;
+        this.sectionElem.querySelector("h2").innerText = `${this.type.toUpperCase()} PROJECTS`;
+    }
+    attach() {
+        this.renderElem.insertAdjacentElement("beforeend", this.sectionElem);
+    }
+}
+const projInput = new Input();
+const activeList = new List("active");
+const finishedList = new List("finished");
