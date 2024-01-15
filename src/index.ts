@@ -1,20 +1,20 @@
 class Project {
-  templateElem: HTMLTemplateElement
-  renderElem: HTMLTemplateElement
-  formElem: HTMLTemplateElement
+  templateElem: HTMLTemplateElement;
+  renderElem: HTMLTemplateElement;
+  formElem: HTMLTemplateElement;
   constructor() {
-    this.templateElem = <HTMLTemplateElement>document.querySelector("#project")
-    this.renderElem = <HTMLTemplateElement>document.querySelector("#app")
+    this.templateElem = <HTMLTemplateElement>document.querySelector("#project");
+    this.renderElem = <HTMLTemplateElement>document.querySelector("#app");
 
-    const imported = document.importNode(this.templateElem.content, true)
-    this.formElem = <HTMLTemplateElement>imported.firstElementChild
+    const imported = document.importNode(this.templateElem.content, true);
+    this.formElem = <HTMLTemplateElement>imported.firstElementChild;
 
-    this.attach()
+    this.attach();
   }
 
   private attach() {
-    this.renderElem.insertAdjacentElement("afterbegin", this.formElem)
+    this.renderElem.insertAdjacentElement("afterbegin", this.formElem);
   }
 }
 
-const project = new Project()
+const project = new Project();
