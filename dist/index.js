@@ -25,6 +25,9 @@ class Project {
             ];
             const [title, desc, people] = userInput;
             console.log(title, desc, people);
+            this.titleElem.value = "";
+            this.descElem.value = "";
+            this.peopleElem.value = "";
         });
     }
 }
