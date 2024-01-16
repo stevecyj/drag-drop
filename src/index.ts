@@ -73,7 +73,42 @@ class List {
   }
 }
 
+class State {
+  private listeners: any[] = [];
+  private projects: any[] = [];
+  private constructor() {}
+  private static instance: State;
+
+  static getInstance() {
+    if (this.instance) {
+      return this.instance;
+    }
+    this.instance = new State();
+    return this.instance;
+  }
+
+  addListener(listenerFn: Function) {
+    this.listeners.push(listenerFn);
+  }
+
+  addProject(title: string, desc: string, nums: number) {
+    const newProject = {
+      id: Math.random().toString(),
+      title,
+      description: desc,
+      people: nums
+    };
+    this.projects.push(newProject);
+
+    for (const listenerFn of this.listeners) {
+      listenerFn(this.projects.slice());
+    }
+  }
+}
+
 const projInput = new Input();
 
 const activeList = new List("active");
 const finishedList = new List("finished");
+
+const prjState = State.getInstance();
