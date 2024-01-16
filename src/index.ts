@@ -50,11 +50,19 @@ class List {
   templateElem: HTMLTemplateElement;
   renderElem: HTMLTemplateElement;
   sectionElem: HTMLTemplateElement;
+  assignedProjects: any[] = [];
   constructor(private type: "active" | "finished") {
     this.templateElem = <HTMLTemplateElement>document.querySelector("#list");
     this.renderElem = <HTMLTemplateElement>document.querySelector("#app");
+    this.assignedProjects = [];
     const imported = document.importNode(this.templateElem.content, true);
     this.sectionElem = <HTMLTemplateElement>imported.firstElementChild;
+
+    this.sectionElem.id = `${this.type}-projects`;
+    prjState.addListener((projects: any[]) => {
+      this.assignedProjects = projects;
+      this.projectsReneder();
+    });
 
     this.attach();
     this.contentRender();
